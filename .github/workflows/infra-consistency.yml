@@ -28,8 +28,10 @@ jobs:
 
       - name: Compare generated JSON
         run: |
-          diff -u infra/main.json infra/main.generated.json
+          jq 'del(.metadata._generator.version, .metadata._generator.templateHash)' infra/main.json > infra/main.normalized.json
+          jq 'del(.metadata._generator.version, .metadata._generator.templateHash)' infra/main.generated.json > infra/main.generated.normalized.json
+          diff -u infra/main.normalized.json infra/main.generated.normalized.json
 
       - name: Cleanup generated file
         if: always()
-        run: rm -f infra/main.generated.json
+        run: rm -f infra/main.generated.json infra/main.normalized.json infra/main.generated.normalized.json
