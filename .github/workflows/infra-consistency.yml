@@ -1,0 +1,31 @@
+name: Infra Consistency Check
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  bicep_json_sync:
+    name: Verify Bicep JSON Sync
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+
+      - name: Compile Bicep to temp JSON
+        uses: azure/CLI@9f7ce6f37c31b777ec6c6b6d1dfe7db79f497956
+        with:
+          inlineScript: |
+            az bicep install
+            az bicep build --file infra/main.bicep --outfile /tmp/main.generated.json
+
+      - name: Compare generated JSON
+        run: |
+          diff -u infra/main.json /tmp/main.generated.json

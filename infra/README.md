@@ -31,14 +31,14 @@ Run it from GitHub: **Actions** → **Provision Azure Infrastructure** → **Run
 ## Security Baseline
 
 Current repository safety settings for `main`:
-- Required status check: `build_and_deploy`
-- Pull request review required: **1 approval**
+- Required status check: `validate`
+- Pull request review required: **0 approvals** (PR still required)
 - Dismiss stale reviews on new commits: **enabled**
 - Admin bypass: **disabled** (`enforce_admins: true`)
 - Force push: **disabled**
 - Branch deletion: **disabled**
 - Linear history: **required**
-- Conversation resolution before merge: **required**
+- Conversation resolution before merge: **not required**
 
 Current runtime hardening:
 - Security headers are configured in [app/public/staticwebapp.config.json](../app/public/staticwebapp.config.json)
