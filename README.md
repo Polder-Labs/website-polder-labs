@@ -28,6 +28,11 @@ A lean Astro + Azure Static Web Apps template for a simple, great webpage.
 - Create the Static Web App with [infra/main.bicep](infra/main.bicep).
 - Add GitHub secret `AZURE_STATIC_WEB_APPS_API_TOKEN`.
 
+The infrastructure is intentionally simple for a first production release:
+- one production environment (`prd`)
+- Azure tagging and parameter validation
+- default `Free` SKU for low traffic, with an easy upgrade path to `Standard`
+
 ## Security notes
 
 - Runtime headers and 404 behavior are defined in [app/public/staticwebapp.config.json](app/public/staticwebapp.config.json).

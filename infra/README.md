@@ -1,6 +1,6 @@
 # Infrastructure
 
-Minimal one-time deployment for the Azure Static Web App resource:
+Lean one-time deployment for the production Azure Static Web App resource.
 
 ```bash
 az group create -g rg-<project>-prod -l westeurope
@@ -9,12 +9,22 @@ az deployment group create \
   --resource-group rg-<project>-prod \
   --template-file infra/main.bicep \
   --parameters \
-    name='<swa-name>'
+    name='<swa-name>' \
+    environment='prd'
 ```
 
 Notes:
 - This template keeps infra intentionally lean: one Static Web App resource.
+- It adds only the basics for a first production version: validated parameters, production tagging, and an explicit SKU parameter.
+- Default SKU is `Free`, which fits a low-traffic first release. Move to `Standard` later if you need higher limits or more advanced features.
 - Application deployment is handled by [.github/workflows/build-and-deploy.yml](../.github/workflows/build-and-deploy.yml).
+
+## Parameters
+
+- `name`: globally unique Static Web App name
+- `environment`: fixed to `prd`
+- `skuName`: `Free` by default, optional `Standard`
+- `tags`: optional extra Azure tags
 
 ## Security Baseline
 
